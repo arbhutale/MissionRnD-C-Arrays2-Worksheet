@@ -16,12 +16,84 @@ NOTES:
 
 #include <iostream>
 
-struct transaction {
+struct transaction
+{
 	int amount;
 	char date[11];
 	char description[20];
 };
+bool checkForEqual(char* Date1, char* Date2)
+{
+	int i = 0;
+	int flag = 0;
+	while (Date1[i] != '\0')
+	{
+		if (Date1[i] == Date2[i])
+			i++;
+		else
+		{
+			flag = 1;
+			break;
+		}
+	}
+	if (flag == 1)
+		return false;
+	else
+		return true;
 
-struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+}
+void strcp(char *result, char *A)
+{
+
+	int i = 0;;
+	for (i = 0; A[i] != '\0'; i++)
+	{
+		result[i] = A[i];
+	}
+	result[i] = '\0';
+
+}
+struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen)
+{
+	int len = 0;
+	int count = 0;
+	int j = 0;
+	if (A == NULL || B == NULL)
+		return NULL;
+	if (ALen < BLen)
+		len = BLen;
+	else
+		len = ALen;
+	struct transaction *result = (transaction*)malloc(sizeof(transaction) * 5);
+
+	for (int i = 0; i < len; i++)
+	{
+		if (A[i].amount == B[i].amount)
+		{
+			if (checkForEqual(A[i].date, B[i].date))
+			{
+				if (checkForEqual(A[i].description, B[i].description))
+				{
+					//result[j].date = (char *)malloc(sizeof(char) * 20);
+
+					count++;
+					result[j].amount = A[i].amount;
+					strcp(result[j].date, A[i].date);
+					//printf("%d", result[0].amount);
+					strcp(result[j].description, A[i].description);
+					j++;
+				}
+				else
+					continue;
+			}
+			else
+				continue;
+		}
+		else
+			continue;
+	}
+	if (count == 0)
+		return NULL;
+	//printf("%s", result[0].date);
+	return result;
 }
